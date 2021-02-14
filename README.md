@@ -1,4 +1,4 @@
-![](https://static1.textcraft.net/data1/7/a/7a934550fb76efd83b303ffa4cc48ae5f34fbf39da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd8070905ccb9558d135c6627fbe265fa4dab9d.png)
+[![](https://static1.textcraft.net/data1/7/a/7a934550fb76efd83b303ffa4cc48ae5f34fbf39da39a3ee5e6b4b0d3255bfef95601890afd80709da39a3ee5e6b4b0d3255bfef95601890afd8070905ccb9558d135c6627fbe265fa4dab9d.png)](#)
 
 Teaching the principals of DevOps through Minecraft.
 
