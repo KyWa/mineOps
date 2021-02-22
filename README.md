@@ -1,4 +1,4 @@
-[![](mineops.png](#)
+[![](mineops.png)](#)
 
 Teaching the principals of DevOps through Minecraft.
 
