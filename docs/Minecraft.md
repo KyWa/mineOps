@@ -62,6 +62,10 @@ $ java -Xmx1024M -Xms1024M -jar server.jar nogui
 
 The above command does a few things. First it calls `java` and passes in some parameters. `-Xms1024M` sets the initial memory size available to Java and `-Xmx2048M` sets the maximum memory available to Java. The `-jar` flag says we are going to call a `jar` file, while `nogui` just tells the Minecraft Server `.jar` to run "headless" aka `nogui`.
 
+##TODO 
+- note all the files that get created when running the server
+- mkdir, useradd (server manager), systemd service
+
 ## Automating Minecraft Server Installation
 
 We can automate in a few ways, a BASH script, Ansible, Puppet and other methods. For this guide we are going to use Ansible as it doesn't require an agent to be installed and is easy to get setup and use. We more or less have a working BASH script from the previous section as all the commands can just be compounded into a single script. Lets dig into Ansible first. In this repository there is a doc for [Ansible](./Ansible.md) and should be read to get an understanding of Ansible and getting a working environment. If you are familiar with Ansible, please proceed (although refreshers come in handy from time to time).
