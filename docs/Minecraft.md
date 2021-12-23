@@ -14,7 +14,7 @@ To deploy a Minecraft server manually, this has been outlined many times over th
 What this looks like is fairly straightforwarder for almost all Linux based distributions, but there are differences with configuration of various system level items between them. In this guide we will be focusing on using a RHEL based OS (CentOS, Fedora, RHEL) for consistency. Debian/Ubuntu will work as well, but some things discussed may not carry over entirely and I will do my best to call out those differences as they come up. 
 
 ---
-**NOTE**
+NOTE
 
 This guide assumes you will have/be `root` on your remote system. If you are having permission issues when running some commands, append them with `sudo`.
 ---
