@@ -71,3 +71,5 @@ The above command does a few things. First it calls `java` and passes in some pa
 We can automate in a few ways, a BASH script, Ansible, Puppet and other methods. For this guide we are going to use Ansible as it doesn't require an agent to be installed and is easy to get setup and use. We more or less have a working BASH script from the previous section as all the commands can just be compounded into a single script. Lets dig into Ansible first. In this repository there is a doc for [Ansible](./Ansible.md) and should be read to get an understanding of Ansible and getting a working environment. If you are familiar with Ansible, please proceed (although refreshers come in handy from time to time).
 
 ##TODO Automation
+
+https://github.com/KyWa/dockerbuilds
