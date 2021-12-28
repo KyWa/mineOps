@@ -7,20 +7,21 @@ Running a minecraft server is easy, but there are many things we can do to make 
 ## Outline
 
 * Deploying a Minecraft server manually
-* Deploying a Minecraft server with automation
+* Deploying a Minecraft server with automation (BASH then Ansible)
 * Making changes to a Minecraft server's properties with automation
 * Automating Minecraft backups
+* Migrate from a server to containers (Docker)
+* Upgrade to Kubernetes from Docker
 * Using Git to keep it all in line
 
 ## Focus Items
 
-* [Minecraft Server](docs/Minecraft.md)
-* [Ansible](docs/Ansible.md)
-* [Git](docs/Git.md)
-* [Docker](docs/Docker.md)
+* [Minecraft Server](docs/Minecraft/)
+* [Ansible](docs/Ansible/)
+* [Git](docs/Git/)
+* [Docker](docs/Docker/)
+* [Kubernetes](docs/Kubernetes/)
 
 ## Stretch Goals
 
-Tie this all into OpenShift or Kubernetes and create a CI/CD system for changes.
-- Digital Ocean VPS for a server
-- GitHub Actions
+- GitHub Actions for CI/CD management of server
