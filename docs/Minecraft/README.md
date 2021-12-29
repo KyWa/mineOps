@@ -41,7 +41,13 @@ $ curl -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 
 Once `jq` is obtained we can download Minecraft Server.
 
 ```sh
-$ MC_URL=$(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select (.id == $release) | .url'` | jq -r '.downloads.server.url') && curl -o server.jar $MC_URL
+$ curl -o server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | ./jq -r '.latest.release as $release | .versions[] | select (.id == $release) | .url'` | ./jq -r '.downloads.server.url')
+```
+
+To grab a specific version of Minecraft Server, you can use a variation of the above one-liner:
+
+```sh
+$ curl -o server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.versions[] | select (.id == "1.18.1") | .url'` | jq -r '.downloads.server.url')
 ```
 
 ### Accept the Minecraft EULA
@@ -91,6 +97,8 @@ drwxr-xr-x. 12 root root     4096 Dec 27 18:50 world/
 ```
 
 As you can see a number of files get created, but only a few of these are useful for the purpose of this series. If you wish to know more about these files, you can visit [this Wiki](https://minecraft.fandom.com/wiki/Minecraft_Wiki) and search for the files you wish to know more about. For this series we are primarily going to focus on `server.properties` as it contains most of what we are concerned with regarding running and configuring a Minecraft Server.
+
+### Running a Minecraft Server
 
 For the rest of manually running a server we are basically done. There are some for sure "nice to haves" which I will outline here. Having a dedicated directory for the server to run in, a user for the server to run as, and a system service to keep the server running. Each of these things is handled quite easily with these commands:
 
