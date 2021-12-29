@@ -2,7 +2,9 @@
 
 This doc should be used as a primer for Ansible and using it for the purpose of automating a Minecraft Server installations and managment.
 
-## Ansible Components
+## Ansible Stuff
+
+## Ansible Primer
 
 * Inventory File - A file containing the groups and servers to manage
 * Variables - Typical key/value variables with the ability to be declared in multiple places

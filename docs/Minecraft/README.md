@@ -124,11 +124,6 @@ Once the above code sections are run, you will have a Minecraft Server running a
 
 After having gone through the [Manual Minecraft Server Installation](#manual-minecraft-server-installation) you will have had a running Minecraft Server installation, but it was on a single server and has quite a few steps to get it all up and running. What if we wanted to run multiple Minecraft Servers? Would you be willing to manually login to each server and go through each of the steps above? Or what if you wanted to change parameeters on each of these servers and have to worry about keeping a list of which servers had which configuration?
 
-We can automate in a few ways, a BASH script, Ansible, Puppet and other methods. For this series we are going to use Ansible as it doesn't require an agent to be installed and is easy to get setup and use. We more or less have a working BASH script from the previous section as all the commands can just be compounded into a single script. Lets dig into Ansible first. In this repository there is a doc for [Ansible](../Ansible) and should be read to get an understanding of Ansible and getting a working environment. If you are familiar with Ansible, please proceed to the next section (although refreshers come in handy from time to time).
+We can automate in a few ways, a BASH script, Ansible, Puppet and other methods. For this series we are going to use Ansible as it doesn't require an agent to be installed and is easy to get setup and use. We more or less have a working BASH script from the previous section as all the commands can just be compounded into a single script. Lets dig into Ansible first. In this repository there is a doc for [Ansible](../Ansible/README.md#ansible-primer) which can be read to get an understanding of Ansible and getting a working environment. If you are familiar with Ansible, please proceed to the next section (although refreshers come in handy from time to time).
 
-### Ansible Playbook
-
-##TODO
-- playbook for install
-- update configurations
-- server backup
+The next step of this series is with Ansibe and that is where the next doc will take us. Continue along [here](../Ansible/)
