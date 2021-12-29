@@ -122,7 +122,7 @@ ExecStart=/usr/bin/java -Xms512M -Xmx3048M -jar server.jar nogui
 WantedBy=multi-user.target
 EOF
 
-$ cp minecraft.servive /usr/lib/systemd/system/
+$ cp minecraft.service /usr/lib/systemd/system/
 $ systemctl enable --now minecraft
 ```
 
