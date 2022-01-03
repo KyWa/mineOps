@@ -124,20 +124,7 @@ There is a basic playbook which handles all the tasks that were gone over in the
 
 The above playbook may seem daunting as all of the tasks are in a single playbook, but this playbook will do precisely what is expected and get you to the same place as the Manual installation method. Here is a short clip of it running:
 
-```{r echo = FALSE, results = "hide"}
-asciicast::init_knitr_engine()
-```
-
-```{r, include = FALSE}
-options(asciicast_knitr_svg = TRUE)
-```
-
-```{asciicast, cache = TRUE}
-#' Rows: 10
-# This is an asciicast example
-loadedNamespaces()
-```
-<img src="mineops-ansible-basic.svg" width="100%" />
+<img src="https://asciinema.org/a/E0bc1YrQvOl0seJVSgaGF9A5t" width="100%" />
 
 ## Configuring Minecraft Server - Basic
 
