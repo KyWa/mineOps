@@ -3,8 +3,9 @@
   vars:
     minecraft_install: true
   tasks:
-    - name: Deploy Minecraft Server
-      import_role: minecraft
+    - name: Deploy a Minecraft Server
+      import_role:
+        name: minecraft
 
   collections:
     - ansible.posix

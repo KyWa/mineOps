@@ -1,2 +1,4 @@
 ansible_ssh_user: root
 minecraft_java_version: "17"
+minecraft_backup: false
+minecraft_restore: false

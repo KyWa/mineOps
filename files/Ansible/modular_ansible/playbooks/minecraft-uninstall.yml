@@ -3,5 +3,6 @@
   vars:
     minecraft_install: false
   tasks:
-    - name: Deploy Minecraft Server
-      import_role: minecraft
+    - name: Remove Minecraft Server
+      import_role:
+        name: minecraft

@@ -22,8 +22,8 @@
 
 - name: Create Minecraft user
   user:
-    name:
-    group:
+    name: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
     comment: "{{ customer_id }} Minecraft Server Manager"
     state: present
 
@@ -42,7 +42,7 @@
         src: eula.txt
         owner: "{{ minecraft_user }}"
         group: "{{ minecraft_group }}"
-        dest: /opt/minecraft/eula.txt
+        dest: "{{ minecraft_directory }}/eula.txt"
     
     - name: Create the systemd service from template
       template:
@@ -51,8 +51,8 @@
 
     - name: Create server.properties from template
       template:
-        src: server.properites.j2
-        dest: /usr/lib/systemd/system/minecraft.service
+        src: server.properties.j2
+        dest: "{{ minecraft_directory }}/server.properties"
 
 - name: Obtain Minecraft Server jar file
   block:

@@ -1,8 +1,8 @@
 ---
 - hosts: minecraft
   vars:
-    minecraft_backup: true
+    minecraft_restore: true
   tasks:
-    - name: Backup a Minecraft Server
+    - name: Restore a Minecraft Server
       import_role:
         name: minecraft

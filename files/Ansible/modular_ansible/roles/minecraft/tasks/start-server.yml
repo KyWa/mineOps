@@ -6,7 +6,7 @@
     state: started
 
 - name: Verify server is up
-  shell: tail /opt/minecraft/logs/latest.log
+  shell: tail {{ minecraft_directory }}/logs/latest.log
   register: server_status
   until: server_status.stdout.find('Done') != -1
   retries: 10
