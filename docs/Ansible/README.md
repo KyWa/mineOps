@@ -124,7 +124,7 @@ There is a basic playbook which handles all the tasks that were gone over in the
 
 The above playbook may seem daunting as all of the tasks are in a single playbook, but this playbook will do precisely what is expected and get you to the same place as the Manual installation method. Here is a short clip of it running:
 
-[![asciicast](https://asciinema.org/a/E0bc1YrQvOl0seJVSgaGF9A5t.svg)](https://asciinema.org/a/E0bc1YrQvOl0seJVSgaGF9A5t)
+[![asciicast](./mineops-ansible-basic.svg)
 
 ## Configuring Minecraft Server - Basic
 
