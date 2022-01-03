@@ -4,6 +4,8 @@
 
 Running a minecraft server is easy, but there are many things we can do to make it better. We can also draw some inspiration from the world of DevOps and learn how SREs work their magic. This tutorial series will focus on a few things centered on learning DevOps through Minecraft. This will not be a childrens coding tutorial as we won't actually be playing Minecraft, but will teach us the principals of keeping a Minecraft server running and being updated with minimal downtime.
 
+This repository is also being made into a blog series which can be found at https://blog.kywa.io/mineops-intro/. A YouTube series will also be created as a video version of the blog.
+
 ## Outline
 
 * Deploying a Minecraft server manually
@@ -21,7 +23,8 @@ Running a minecraft server is easy, but there are many things we can do to make 
 * [Git](docs/Git/)
 * [Docker](docs/Docker/)
 * [Kubernetes](docs/Kubernetes/)
+* [ArgoCD](docs/ArgoCD)
 
 ## Stretch Goals
 
-- GitHub Actions for CI/CD management of server
+- GitHub Actions for CI/CD management of server for all others
