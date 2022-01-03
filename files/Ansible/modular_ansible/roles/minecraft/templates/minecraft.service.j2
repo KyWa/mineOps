@@ -2,14 +2,14 @@
 Description=start and stop the minecraft-server 
 
 [Service]
-WorkingDirectory=/opt/minecraft
+WorkingDirectory={{ minecraft_directory }}
 
-User=minecraft
-Group=minecraft
+User={{ minecraft_user }}
+Group={{ minecraft_group }}
 Restart=on-failure
 RestartSec=20 5
 
-ExecStart=/usr/bin/java -Xms512M -Xmx2056M -jar /opt/minecraft/server.jar nogui
+ExecStart=/usr/bin/java -Xms512M -Xmx2056M -jar {{ minecraft_directory }}/server.jar nogui
 
 [Install]
 WantedBy=multi-user.target

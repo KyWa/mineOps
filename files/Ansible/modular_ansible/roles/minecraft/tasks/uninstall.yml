@@ -1,0 +1,14 @@
+---
+- name: Stop Minecraft Server
+  systemd:
+    name: minecraft
+    state: stopped
+    enabled: false
+
+- name: Remove objects 
+  file: 
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ minecraft_directory }}"
+    - /usr/lib/systemd/system/minecraft.service

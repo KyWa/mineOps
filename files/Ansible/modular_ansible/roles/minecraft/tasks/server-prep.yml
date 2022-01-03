@@ -1,0 +1,90 @@
+---
+- name: Install Java
+  dnf:
+    name: "java-{{ minecraft_java_version }}-openjdk"
+    state: installed
+
+- name: Install jq
+  block:
+    - name: Check and Set jq path
+      stat: 
+        path: /usr/bin/jq
+      register: jq_installed
+    
+    - name: Grabbing jq
+      shell: curl -o /usr/bin/jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq
+      when: jq_installed.stat.exists != true
+
+- name: Create Minecraft group
+  group:
+    name: "{{ minecraft_group }}"
+    state: present
+
+- name: Create Minecraft user
+  user:
+    name:
+    group:
+    comment: "{{ customer_id }} Minecraft Server Manager"
+    state: present
+
+- name: Setup Minecraft Server Directory and Files
+  block:
+    - name: Create Minecraft Server Directory
+      file: 
+        path: "{{ minecraft_directory }}"
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+        state: directory
+        mode: 0755
+
+    - name: Copy the EULA
+      copy:
+        src: eula.txt
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+        dest: /opt/minecraft/eula.txt
+    
+    - name: Create the systemd service from template
+      template:
+        src: minecraft.service.j2
+        dest: /usr/lib/systemd/system/minecraft.service
+
+    - name: Create server.properties from template
+      template:
+        src: server.properites.j2
+        dest: /usr/lib/systemd/system/minecraft.service
+
+- name: Obtain Minecraft Server jar file
+  block:
+    - name:  Grabbing specified version of Minecraft Server
+      shell: |
+        curl -o {{ minecraft_directory }}/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.versions[] | select (.id == "{{ minecraft_version }}") | .url'` | jq -r '.downloads.server.url')
+      when: minecraft_version != "latest"
+    
+    - name: Grabbing latest version of Minecraft Server
+      shell: |
+        curl -o {{ minecraft_directory }}/server.jar -sL $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select(.id == $release) | .url'` | jq -r '.downloads.server.url')
+      when: minecraft_version == "latest"
+
+    - name: Set owner of server.jar
+      file:
+        path: "{{ minecraft_directory }}/server.jar"
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+
+- name: Opening Firewall Ports
+  block:
+    - name: Open Minecraft Server Port on Firewall
+      firewalld:
+        port:  "{{ minecraft_server_port }}/tcp"
+        permanent: yes
+        state: enabled
+    
+    - name: Open Minecraft Query Port on Firewall
+      firewalld:
+        port: "{{ minecraft_query_port }}/udp"
+        permanent: yes
+        state: enabled
+
+- name: Starting up Minecraft
+  include_tasks: start-server.yml

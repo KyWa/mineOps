@@ -1,0 +1,35 @@
+---
+- name: Mount the Minecraft Server Backup Share
+  mount:
+    path: /mnt
+    src: "{{ minecraft_backup_share }}"
+    fstype: nfs
+    state: mounted
+
+- name: Stop the Minecraft Server service
+  systemd:
+    name: minecraft
+    state: stopped
+
+- name: Replace systemd unit file
+  copy:
+    remote_src: yes
+    dest: "{{ systemd_unit_file }}"
+    src: /mnt/minecraft.service
+
+- name: Extract and Copy the Minecraft Server Directory
+  unarchive:
+    dest: "{{ minecraft_directory }}"
+    src: "/mnt/minecraft-backup.tgz"
+    remote_src: yes
+
+- name: Start the Minecraft Server service
+  systemd:
+    name: minecraft
+    state: started
+    enabled: yes
+
+- name: Unmount the Minecraft Serer Backup Share
+  mount:
+    path: /mnt
+    state: unmounted

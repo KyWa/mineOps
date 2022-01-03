@@ -1,2 +1,4 @@
 minecraft_motd: |
   "Welcome to customer-0 Minecraft Servers!"
+customer_id: 12345
+minecraft_group: "customer-0-group"

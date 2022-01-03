@@ -1,0 +1,12 @@
+---
+- name: Install Minecraft
+  include_tasks: server-prep.yml
+  when: minecraft_install == true
+
+- name: Backup Minecraft
+  include_tasks: backup.yml
+  when: minecraft_backup == true
+
+- name: Restore Minecraft
+  include_tasks: restore.yml
+  when: minecraft_restore == true
