@@ -3,6 +3,10 @@
   include_tasks: server-prep.yml
   when: minecraft_install == true
 
+- name: Uninstall Minecraft
+  include_tasks: uninstall.yml
+  when: minecraft_install == false
+
 - name: Backup Minecraft
   include_tasks: backup.yml
   when: minecraft_backup == true
