@@ -4,6 +4,15 @@
     name: minecraft
     state: stopped
 
+- name: Create ResourcePack directory
+  file:
+    path: "{{ minecraft_directory }}/resourcepack"
+    owner: "{{ minecraft_user }}"
+    group: "{{ minecraft_group }}"
+    state: directory
+    mode: 0755
+  when: resource_pack is defined
+
 - name: Create server.properties from template
   template:
     src: server.properties.j2
