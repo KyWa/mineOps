@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: Deploy Minecraft Server
+      import_role: minecraft
+      tasks_from: backup.yml

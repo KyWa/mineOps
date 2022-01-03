@@ -1,0 +1,4 @@
+minecraft_dir: "/opt/mineops-0"
+minecraft_user: "minecraft"
+minecraft_group: "minecraft"
+minecraft_version: "latest"

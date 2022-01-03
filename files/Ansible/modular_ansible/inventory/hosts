@@ -1,0 +1,5 @@
+[minecraft:children]
+customer-0
+
+[customer-0:children]
+mineops-0.kywa.io
