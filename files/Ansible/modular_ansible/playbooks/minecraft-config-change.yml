@@ -1,0 +1,8 @@
+---
+- hosts: minecraft
+  vars:
+    minecraft_config_change: true
+  tasks:
+    - name: Change server.properties
+      import_role:
+        name: minecraft

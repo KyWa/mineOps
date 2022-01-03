@@ -7,6 +7,10 @@
   include_tasks: uninstall.yml
   when: minecraft_install == false
 
+- name: Change Minecraft Configuration
+  include_tasks: config-change.yml
+  when: minecraft_config_change == true
+
 - name: Backup Minecraft
   include_tasks: backup.yml
   when: minecraft_backup == true

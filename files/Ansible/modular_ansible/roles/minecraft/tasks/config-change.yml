@@ -1,0 +1,19 @@
+---
+- name: Stop the Minecraft Server
+  systemd:
+    name: minecraft
+    state: stopped
+
+- name: Create server.properties from template
+  template:
+    src: server.properties.j2
+    dest: "/tmp/server.properties"
+
+- name: Create server.properties from template
+  copy:
+    remote_src: true
+    src: /tmp/server.properties
+    dest: "{{ minecraft_directory }}/server.properties"
+
+- name: Starting up Minecraft
+  include_tasks: start-server.yml
