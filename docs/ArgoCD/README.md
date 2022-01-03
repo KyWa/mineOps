@@ -1,0 +1,1 @@
+# ArgoCD for mineOps
