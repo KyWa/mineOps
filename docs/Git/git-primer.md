@@ -6,7 +6,7 @@ Git can be a complex application, but for the focus of using it during the `mine
 
 Working Directory - The `working directory` is the directory where you have content that you want to manage with `git`
 
-Commit - A `commit` is a full snapshot of the contents of your `working directory` of the files tracked by `git`. A `commit` keeps track of of these changes in a unique hash sometimes called a `SHA`. An example of this is: `3f51ebcb621890d47bbf3a3c42bec6bffa360d91`
+Commit - A `commit` is a full snapshot of the contents of the `working directory` and of the files tracked by `git`. A `commit` keeps track of of these changes in a unique hash sometimes called a `SHA`. An example of this is: `3f51ebcb621890d47bbf3a3c42bec6bffa360d91`
 
 Index - The `index` in Git is essentially a staging area. This is where snapshots of changes are placed via `git add` before they are `commited`. The `index` is crucial to Git as it sits between the `working directory` and all the various `commits` of the repository.
 
