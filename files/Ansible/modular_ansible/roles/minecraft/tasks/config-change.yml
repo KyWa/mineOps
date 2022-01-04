@@ -1,9 +1,4 @@
 ---
-- name: Stop the Minecraft Server
-  systemd:
-    name: minecraft
-    state: stopped
-
 - name: Create ResourcePack directory
   file:
     path: "{{ minecraft_directory }}/resourcepack"
@@ -23,6 +18,11 @@
     remote_src: true
     src: /tmp/server.properties
     dest: "{{ minecraft_directory }}/server.properties"
+
+- name: Stop the Minecraft Server
+  systemd:
+    name: minecraft
+    state: stopped
 
 - name: Starting up Minecraft
   include_tasks: start-server.yml
