@@ -2,3 +2,6 @@ ansible_ssh_user: root
 minecraft_java_version: "17"
 minecraft_backup: false
 minecraft_restore: false
+minecraft_user: "minecraft"
+minecraft_group: "minecraft"
+minecraft_directory: "/opt/minecraft"
