@@ -1,5 +1,9 @@
 [minecraft:children]
 customer-0
+customer-1
 
 [customer-0]
 mineops-0.kywa.io
+
+[customer-1]
+mineops-1.kywa.io

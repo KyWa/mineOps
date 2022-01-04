@@ -4,7 +4,7 @@ gamemode: survival
 enable_command_block: "false"
 enable_query: "false"
 level_name: world
-motd: A Minecraft Server
+motd: "A Minecraft Server"
 minecraft_query_port: 25565
 pvp: "true"
 difficulty: easy

@@ -27,6 +27,11 @@
     comment: "{{ customer_id }} Minecraft Server Manager"
     state: present
 
+- name: Check if a server.jar exists already
+  stat: 
+    path: "{{ minecraft_directory}}/server.jar"
+  register: jar_exists
+
 - name: Setup Minecraft Server Directory and Files
   block:
     - name: Create Minecraft Server Directory
@@ -62,6 +67,7 @@
         state: directory
         mode: 0755
       when: resource_pack is defined
+  when: jar_exists.stat.exists != true
 
 - name: Obtain Minecraft Server jar file
   block:
