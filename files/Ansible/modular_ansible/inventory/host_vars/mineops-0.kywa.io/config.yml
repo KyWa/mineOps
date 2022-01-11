@@ -1,3 +1,18 @@
 minecraft_directory: "/opt/mineops-0"
-minecraft_user: "minecraft"
-minecraft_version: "latest"
+ansible_ssh_user: root
+minecraft_java_version: "17"
+minecraft_backup: false
+minecraft_restore: false
+
+# Container Options
+minecraft_container_registry: "docker.io"
+minecraft_contanier_image: "mineops/minecraft-server"
+minecraft_contanier_digest: "sha256:0e5242fbae2abf68df82f14a19d80f5e64d1afcc8241c84e2fe8e554831076d7"
+is_container: true
+
+containers:
+  customer0:
+    - mineops0
+    - mineops1
+  customer1:
+    - mineops0

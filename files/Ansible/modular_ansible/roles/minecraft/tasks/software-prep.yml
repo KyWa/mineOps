@@ -1,0 +1,112 @@
+---
+- name: Install Java
+  dnf:
+    name: "java-{{ minecraft_java_version }}-openjdk"
+    state: installed
+  when: not is_container
+
+- name: Install jq
+  block:
+    - name: Check and Set jq path
+      stat: 
+        path: /usr/bin/jq
+      register: jq_installed
+    
+    - name: Grabbing jq and placing jq
+      shell: curl -o /usr/bin/jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq
+      when: jq_installed.stat.exists != true
+
+- name: Check if a server.jar exists already
+  stat: 
+    path: "{{ minecraft_directory}}/server.jar"
+  register: jar_exists
+
+- name: Setup Minecraft Server Directory and Files - Virtual
+  block:
+    - name: Create Minecraft Server Directory
+      file: 
+        path: "{{ minecraft_directory }}"
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+        state: directory
+        mode: 0755
+
+    - name: Copy the EULA
+      copy:
+        src: eula.txt
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+        dest: "{{ minecraft_directory }}/eula.txt"
+    
+    - name: Create the systemd service from template
+      template:
+        src: minecraft.service.j2
+        dest: /usr/lib/systemd/system/minecraft.service
+      when: not container
+
+    - name: Create server.properties from template
+      template:
+        src: server.properties.j2
+        dest: "{{ minecraft_directory }}/server.properties"
+
+    - name: Create ResourcePack directory
+      file:
+        path: "{{ minecraft_directory }}/resourcepack"
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"
+        state: directory
+        mode: 0755
+      when: resource_pack is defined
+  when: jar_exists.stat.exists != true and ! is_container
+
+- name: Setup Minecraft Server Directory and Files - Virtual
+  block:
+    - name: Create Minecraft Server Directory
+      file: 
+        path: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}"
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        state: directory
+        mode: 0755
+
+    - name: Copy the EULA
+      copy:
+        src: eula.txt
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        dest: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/eula.txt"
+    
+    - name: Create the systemd service from template
+      template:
+        src: container.service.j2
+        dest: "/usr/lib/systemd/system/{{ item.0.key }}-{{ item.1 }}-container.service"
+
+    - name: Create server.properties from template
+      template:
+        src: server.properties.j2
+        dest: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/server.properties"
+
+    - name: Create ResourcePack directory
+      file:
+        path: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/resourcepack"
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        state: directory
+        mode: 0755
+      when: resource_pack is defined
+  when: jar_exists.stat.exists != true
+  loop: "{{ containers | dict2items | subelements('value') }}"
+
+- name: Obtain Minecraft Server jar file
+  block:
+    - name:  Grabbing specified version of Minecraft Server shell: | curl -o {{ minecraft_directory }}/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.versions[] | select (.id == "{{ minecraft_version }}") | .url'` | jq -r '.downloads.server.url') when: minecraft_version != "latest"
+    - name: Grabbing latest version of Minecraft Server
+      shell: |
+        curl -o {{ minecraft_directory }}/server.jar -sL $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select(.id == $release) | .url'` | jq -r '.downloads.server.url')
+      when: minecraft_version == "latest"
+
+    - name: Set owner of server.jar
+      file:
+        path: "{{ minecraft_directory }}/server.jar"
+        owner: "{{ minecraft_user }}"
+        group: "{{ minecraft_group }}"

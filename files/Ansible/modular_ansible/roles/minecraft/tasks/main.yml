@@ -1,7 +1,11 @@
 ---
 - name: Install Minecraft
   include_tasks: server-prep.yml
-  when: minecraft_install == true
+  when: minecraft_install == true and not is_container
+
+- name: Create Minecraft Container
+  include_tasks: container-create.yml
+  when: minecraft_install == true and is_container == true
 
 - name: Uninstall Minecraft
   include_tasks: uninstall.yml

@@ -1,0 +1,74 @@
+---
+- name: Setup Minecraft Server Directory and Files - Virtual
+  block:
+    - name: Create Customer Group
+      group:
+        name: "{{ item.0.key }}"
+        state: present
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Create Customer User
+      user:
+        name: "{{ item.0.key }}"
+        state: present
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Create Minecraft Server Directory
+      file: 
+        path: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}"
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        state: directory
+        mode: 0755
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Copy the EULA
+      copy:
+        src: eula.txt
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        dest: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/eula.txt"
+      loop: "{{ containers | dict2items | subelements('value') }}"
+    
+    - name: Create the systemd service from template
+      template:
+        src: container.service.j2
+        dest: "/usr/lib/systemd/system/{{ item.0.key }}-{{ item.1 }}-container.service"
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Create server.properties from template
+      template:
+        src: server.properties.j2
+        dest: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/server.properties"
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Create ResourcePack directory
+      file:
+        path: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/resourcepack"
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+        state: directory
+        mode: 0755
+      when: resource_pack is defined
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+- name: Obtain Minecraft Server jar file
+  block:
+    - name:  Grabbing specified version of Minecraft Server 
+      shell: | 
+        curl -o /opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.versions[] | select (.id == "{{ minecraft_version }}") | .url'` | jq -r '.downloads.server.url') 
+      when: minecraft_version != "latest"
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Grabbing latest version of Minecraft Server
+      shell: |
+        curl -o /opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/server.jar -sL $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select(.id == $release) | .url'` | jq -r '.downloads.server.url')
+      when: minecraft_version == "latest"
+      loop: "{{ containers | dict2items | subelements('value') }}"
+
+    - name: Set owner of server.jar
+      file:
+        path: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}/server.jar"
+        owner: "{{ item.0.key }}"
+        group: "{{ item.0.key }}"
+      loop: "{{ containers | dict2items | subelements('value') }}"

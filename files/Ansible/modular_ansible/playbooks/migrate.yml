@@ -1,0 +1,33 @@
+---
+###
+#
+# Playbook will be used to convert existing Minecraft Servers to Container Hosts
+#
+###
+- hosts: all
+  gather_facts: false
+  tasks:
+  - name: Container Prerequisites
+    include_role:
+      name: minecraft
+      tasks_from: container-prep.yml
+
+  - name: Stop existing server
+    systemd:
+      name: minecraft
+      state: stopped
+    ignore_errors: true
+
+  - name: Container Create
+    include_role:
+      name: minecraft
+      tasks_from: container-create.yml
+
+  - name: Copy existing customer server
+    copy:
+      src: "{{ minecraft_directory }}"
+      dest: "/opt/{{ container_path }}/{{ item.0.key }}/{{ item.1 }}"
+      remote_src: true
+    run_once: true
+    loop: "{{ containers | dict2items | subelements('value') }}"
+  

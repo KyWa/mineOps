@@ -1,0 +1,16 @@
+---
+- name: Install Podman
+  yum:
+    name: podman
+    state: installed
+
+- name: Install jq
+  block:
+    - name: Check and Set jq path
+      stat: 
+        path: /usr/bin/jq
+      register: jq_installed
+    
+    - name: Grabbing jq
+      shell: curl -o /usr/bin/jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/bin/jq
+      when: jq_installed.stat.exists != true

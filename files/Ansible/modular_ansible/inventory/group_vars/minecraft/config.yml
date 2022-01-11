@@ -5,3 +5,9 @@ minecraft_restore: false
 minecraft_user: "minecraft"
 minecraft_group: "minecraft"
 minecraft_directory: "/opt/minecraft"
+minecraft_container_registry: "docker.io"
+minecraft_container_image: "mineops/minecraft-server"
+minecraft_container_digest: "sha256:0e5242fbae2abf68df82f14a19d80f5e64d1afcc8241c84e2fe8e554831076d7"
+is_container: true
+container_path: "containers"
+minecraft_version: "latest"
