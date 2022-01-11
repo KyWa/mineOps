@@ -35,6 +35,7 @@
         src: container.service.j2
         dest: "/usr/lib/systemd/system/{{ item.0.key }}-{{ item.1 }}-container.service"
       loop: "{{ containers | dict2items | subelements('value') }}"
+      notify: start_containers
 
     - name: Create server.properties from template
       template:

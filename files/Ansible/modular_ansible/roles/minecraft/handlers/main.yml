@@ -1,0 +1,7 @@
+---
+- name: start_containers
+  systemd:
+    name: "{{ item.0.key }}-{{ item.1 }}-container.service"
+    enabled: yes
+    state: started
+  loop: "{{ containers | dict2items | subelements('value') }}"
