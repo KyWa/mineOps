@@ -1,29 +1,23 @@
-# Using Multi-Stage Build
-FROM registry.access.redhat.com/ubi8/ubi:latest AS builder
-
-# Grabbing jq to get server.jar
-RUN curl -o jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x jq
-
-# Pulling down loatest Minecraft Server jarfile
-RUN "{{ curl_command }}"
-
-# Creating eula.txt
-RUN echo "eula=true" > /tmp/eula.txt
-
-# Start Final Build Stage
 FROM registry.access.redhat.com/ubi8/openjdk-17-runtime@sha256:1a40771ffd18a688a4492f319814af5d2e3377eb293c69ca682f29a3a86635ab
+
+USER 0
 
 # Label Image with important information
 LABEL builder="{{ mineops_email }}" \
       application="minecraft-server" \
-      java_version="{{ java_version }}" \
+      java_version="{{ minecraft_java_version }}" \
       minecraft_version="{{ minecraft_version }}"
 
-RUN mkdir /minecraft
+EXPOSE 25565
+
+COPY mc-start.sh /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/mc-start.sh && curl -o /usr/local/bin/jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x /usr/local/bin/jq
+
+VOLUME ["/minecraft"]
 
 WORKDIR /minecraft
 
-COPY --from=builder /tmp/eula.txt .
-COPY --from=builder /tmp/server.jar .
+USER 1001
 
-CMD ["java", "-jar", "server.jar"]
+CMD ["/usr/local/bin/mc-start.sh"]

@@ -2,36 +2,43 @@
 - name: Setup Build dir
   tempfile:
     state: directory
+    suffix: podman
   register: temp_build_dir
 
-- name: Set version pull
+- name: Set version pull - latest
   set_fact:
-    curl_command: curl -o /tmp/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | ./jq -r '.latest.release as $release | .versions[] | select (.id == $release) | .url'` | ./jq -r '.downloads.server.url')
+    curl_command: curl -o /minecraft/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | /usr/local/bin/jq -r '.latest.release as $release | .versions[] | select (.id == $release) | .url'` | /usr/local/bin/jq -r '.downloads.server.url')
 
-- name: Set version pull
+- name: Set version pull - targeted release
   set_fact:
-    curl_command: curl -o /tmp/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.versions[] | select (.id == "{{ minecraft_version }}") | .url'` | jq -r '.downloads.server.url') 
+    curl_command: curl -o /minecraft/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | /usr/local/bin/jq -r '.versions[] | select (.id == "{{ minecraft_version }}") | .url'` | /usr/local/bin/jq -r '.downloads.server.url') 
   when: minecraft_version != "latest"
 
 - name: Copy Dockerfile
   template:
     src: "Dockerfile.j2"
-    dest: "/tmp/{{ temp_build_dir }}"
+    dest: "{{ temp_build_dir.path }}/Dockerfile"
+
+- name: Copy Startup Script
+  template:
+    src: "mc-start.sh.j2"
+    dest: "{{ temp_build_dir.path }}/mc-start.sh"
 
 - name: Build mineOps - Minecraft Server
   podman_image:
     name: minecraft-server:{{ minecraft_build_tag }}
-    path: "/tmp/{{ temp_build_dir }}"
+    path: "{{ temp_build_dir.path }}"
     build:
       cache: no
       force_rm: yes
       format: oci
+      rm: yes
 
 - name: Tag new image with latest
   containers.podman.podman_tag:
     image: minecraft-server:{{ minecraft_build_tag }}
     target_names:
-      - latest
+      - minecraft-server:latest
       
 - name: Build and push an image using username and password
   podman_image:
@@ -46,7 +53,15 @@
     - "{{ minecraft_build_tag }}"
     - latest
 
-- name: Clean up
+- name: Clean up files
   file:
     state: absent
     path: "/tmp/{{ temp_build_dir }}"
+
+- name: Clean up tags
+  podman_image:
+    name: minecraft-server:{{ item }}
+    state: absent
+  loop:
+    - "{{ minecraft_build_tag }}"
+    - latest

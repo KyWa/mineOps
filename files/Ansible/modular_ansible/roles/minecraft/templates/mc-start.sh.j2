@@ -1,0 +1,7 @@
+#!/bin/bash
+
+{{ curl_command }}
+
+echo "eula=true" > /minecraft/eula.txt
+
+java {{ minecraft_java_opts }} -jar /minecraft/server.jar nogui

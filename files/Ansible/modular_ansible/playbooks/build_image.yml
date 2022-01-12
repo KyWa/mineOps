@@ -1,8 +1,6 @@
 ---
 - hosts: all
   gather_facts: false
-  vars:
-    minecraft_build_tag: "test"
   tasks:
     - name: Build Container
       include_role:
