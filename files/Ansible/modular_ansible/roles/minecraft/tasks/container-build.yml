@@ -40,13 +40,12 @@
     target_names:
       - minecraft-server:latest
       
-- name: Build and push an image using username and password
+- name: Push the new image to Docker Hub
   podman_image:
     name: minecraft-server:{{ item }}
     push: yes
     push_args:
       dest: docker.io/mineops/minecraft-server
-    tag: "{{ minecraft_build_tag }}"
     username: "{{ docker_hub_username }}"
     password: "{{ docker_hub_password }}"
   loop:
