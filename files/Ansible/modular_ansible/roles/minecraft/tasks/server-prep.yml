@@ -78,7 +78,7 @@
     
     - name: Grabbing latest version of Minecraft Server
       shell: |
-        curl -o {{ minecraft_directory }}/server.jar -sL $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select(.id == $release) | .url'` | jq -r '.downloads.server.url')
+        curl -o {{ minecraft_directory }}/server.jar $(curl `curl -sL https://launchermeta.mojang.com/mc/game/version_manifest.json | jq -r '.latest.release as $release | .versions[] | select(.id == $release) | .url'` | jq -r '.downloads.server.url')
       when: minecraft_version == "latest"
 
     - name: Set owner of server.jar

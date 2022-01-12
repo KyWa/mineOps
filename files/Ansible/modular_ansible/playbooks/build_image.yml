@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    minecraft_build_tag: "test"
+  tasks:
+    - name: Build Container
+      include_role:
+        name: minecraft
+        tasks_from: container-build.yml
+
+  collections:
+    - containers.podman
