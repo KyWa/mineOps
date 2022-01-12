@@ -7,7 +7,7 @@ Restart=always
 ExecStartPre=-/usr/bin/podman stop {{ item.0.key }}-{{ item.1 }}
 ExecStartPre=-/usr/bin/podman rm {{ item.0.key }}-{{ item.1 }}
 ExecStartPre=/usr/bin/podman pull {{ minecraft_container_registry }}/{{ minecraft_container_image }}:{{ minecraft_container_digest }}
-ExecStart=/usr/bin/podman run --rm --name {{ item.0.key }}-{{ item.1 }}
+ExecStart=/usr/bin/podman run --rm --name {{ item.0.key }}-{{ item.1 }} -d -p 25565:25565 -v "${PWD}":/minecraft:z {{ minecraft_container_registry }}/{{ minecraft_container_image }}:{{ minecraft_container_digest }}
 
 [Install]
 WantedBy=multi-user.target
