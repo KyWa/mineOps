@@ -451,7 +451,7 @@ Let's look at how to build an Image with Ansible. There are 2 collections in Ans
 
 The above 2 tasks are the core foundation for building and pushing a Container Image to a Container Registry. There is some other logic we will build around this, but the core are those 2 tasks. Let's kick off a test run and see what we get. We will dig into the where docker_hub_password is later along with using ansible-vault to protect these secrets.
 
-[![](media/ansible-build-push.gif](#)
+[![](media/ansible-build-push.gif)](#)
 
 Looks like we have ourselves a working Ansible task to build a Container Image and push it to a Registry! The full Ansible task for this can be found in the repo HERE. Now lets look at a few other tricks to make this a little more secure instead of having a seemingly plain text variable somewhere.
 
@@ -483,7 +483,7 @@ When Ansible is installed another "program" is installed along with it called an
 
 Now its time for practice! Here is a quick little example of what it looks like to use ansible-vault on its own.
 
-[![](media/vault-demo.gif](#)
+[![](media/vault-demo.gif)](#)
 
 One of the neat things about ansible-vault is that the data inside doesn't have to be a key: value variable style set of data. It can be anything at all. Any time of file, which can come in super handy in case you wanted to encrypt an entire file of lets say, a dockercfg.json containing login data to a Container Registry or just data you don't want visible in Git in general.
 
@@ -600,7 +600,7 @@ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
 
 Once you have it up and running you can go to https://localhost:9443, create a password for the admin account and get a pretty UI like this:
 
-[![](media/portainer.gif](#)
+[![](media/portainer.gif)](#)
 
 From the little gif there you can see a glimpse of some of the features it has. It is more features than most people or businesses need to run a Container Host, but has features that allow it to manage more than a single Container Host.
 
