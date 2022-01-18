@@ -10,8 +10,8 @@ spec:
     matchLabels:
       app: mineops
   replicas: 1
-    strategy:
-      type: Recreate
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

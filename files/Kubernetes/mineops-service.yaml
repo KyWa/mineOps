@@ -13,4 +13,4 @@ spec:
   selector:
     app: mineops
   sessionAffinity: None
-  type: ClusterIP
+  type: NodePort
