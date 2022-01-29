@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: code-server
+  name: code-server
+  namespace: code-server
+spec:
+  selector:
+    matchLabels:
+      app: code-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - env:
+        - name: PASSWORD
+          value: CHANGEME
+        image: quay.io/kywa/kcode:latest
+        imagePullPolicy: Always
+        name: code-server
+        volumeMounts:
+        - mountPath: /home/coder
+          name: coder
+      volumes:
+      - name: coder
+        persistentVolumeClaim:
+          claimName: code-server
