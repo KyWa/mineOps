@@ -22,6 +22,10 @@ spec:
         image: quay.io/kywa/kcode:latest
         imagePullPolicy: Always
         name: code-server
+        ports:
+        - name: code-server
+          containerPort: 8080
+          protocol: TCP
         volumeMounts:
         - mountPath: /home/coder
           name: coder
