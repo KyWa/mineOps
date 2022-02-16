@@ -1,3 +1,5 @@
+# The initContainer is required for the sake of permissions (PVC will be mounted as root and we have no permissions as we are not root)
+# There are other ways around this in Kubernetes, but for the PVC this manifest uses (hostPath from the node), root is the only option
 ---
 apiVersion: apps/v1
 kind: Deployment
