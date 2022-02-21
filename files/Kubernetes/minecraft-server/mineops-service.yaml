@@ -4,7 +4,6 @@ metadata:
   labels:
     app: mineops
   name: mineops
-  namespace: mineops
 spec:
   ports:
   - port: 25565

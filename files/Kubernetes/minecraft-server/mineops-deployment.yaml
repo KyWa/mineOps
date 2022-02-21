@@ -5,7 +5,6 @@ metadata:
   labels:
     app: mineops
   name: mineops
-  namespace: mineops
 spec:
   selector:
     matchLabels:
