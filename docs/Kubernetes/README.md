@@ -10,6 +10,8 @@ Kubernetes is a collection of open-source software that handles the deployment a
 
 One of the many great things about Kubernetes is the scheduler, which handles the placement of applications on nodes in the Kubernetes cluster. How it does it is quite interesting and has some pretty deep engineering designs under the hood that I am quite literally not capable of explaining. So I'll just let Kelsey Hightower explain it in a simple elegant outline.
 
+[![Kelsey Hightower - PuppetConf 2016](https://img.youtube.com/vi/HlAXp0-M6SY/0.jpg)](https://www.youtube.com/watch?v=HlAXp0-M6SY)
+
 I've heard it said that Kubernetes is really just the "next Linux" and truth be told having been working with Kubernetes for quite some time now, I have to agree. Linux gave the data center its freedom to do many things and Kubernetes has now done this for the "Cloud" (and data centers). Many long time Linux admins and engineers will easily see the comparisons of Linux and Kubernetes
 
 ## Do We Need It?
