@@ -99,7 +99,7 @@ Based on the output above, we have just created quite a few new objects in our c
 
 ### Accessing ArgoCD
 
-Now to see what we get, oh wait we need ingress, but thankfully this should already been installed. If for some reason you do not have some form of IngressController installed, please check out this small guide here TODO #GUIDE. Even if an IngressController has been installed, we will still need an actual Ingress object to route our traffic to ArgoCD. Here is a simple manifest for such an Ingress object. Please note you do not actually need to use the web front end to make use of ArgoCD as it will work on its own, but if you wish to use the `argocd` client or view from the web front end to manage things, you will need an Ingress object.
+To access the web front end of ArgoCD, we will need an `Ingress` object to route our traffic to ArgoCD. Here is a simple manifest for such an Ingress object. Please note you do not actually need to use the web front end to make use of ArgoCD as it will work on its own, but if you wish to use the `argocd` client or view from the web front end to manage things, you will need an `Ingress` object (or a Gateway/VirtualService etc...).
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -129,17 +129,22 @@ spec:
     - argo.kywa.io
 ```
 
-**NOTE** Some of these annotations can be removed by changing the configuration of ArgoCD's settings in the ConfigMap `argocd-cm`. 
+**NOTE** Some of these annotations can be removed by changing the configuration of ArgoCD's settings in the ConfigMap `argocd-cm`, but are required for a "default" installation of ArgoCD along with `ingress-nginx`.
 
-ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have a login. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in.
-
+ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have a login. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in. To view the `Secret` and get the password to login initially here is a quick handy script (does require `jq` to be installed on your machine):
 
 ```sh
-###TODO###
-oc get secret initial-admin
-###TODO###
+$ kubectl get secret -n argocd argocd-initial-admin-secret -o json | jq -r '.data.password' | base64 -d
+Z1Ha6-z8QVR2jC0b
+```
+
+Later in this guide we will be doing things in a more declarative process and will not be needing to do the manual secret getting. Now let's try to login to our newly installed ArgoCD instance.
+
+TODO GIF of login to ArgoCD
 
 ## Using ArgoCD
+
+Now that we've logged into the UI, we are met with an amazingly detailed blank screen. 
 
 ### Repository
 
