@@ -131,16 +131,16 @@ spec:
 
 **NOTE** Some of these annotations can be removed by changing the configuration of ArgoCD's settings in the ConfigMap `argocd-cm`, but are required for a "default" installation of ArgoCD along with `ingress-nginx`.
 
-ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have a login. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in. To view the `Secret` and get the password to login initially here is a quick handy script (does require `jq` to be installed on your machine):
+ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have a login. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in. To view the `Secret` and get the password to login initially here is a quick handy one liner:
 
 ```sh
-$ kubectl get secret -n argocd argocd-initial-admin-secret -o json | jq -r '.data.password' | base64 -d
+$ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
 Z1Ha6-z8QVR2jC0b
 ```
 
 Later in this guide we will be doing things in a more declarative process and will not be needing to do the manual secret getting. Now let's try to login to our newly installed ArgoCD instance.
 
-TODO GIF of login to ArgoCD
+[![](media/argo-login.gif)](#)
 
 ## Using ArgoCD
 
