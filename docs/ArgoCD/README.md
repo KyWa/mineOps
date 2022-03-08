@@ -22,17 +22,23 @@ We've roughly got our what we believe we need to make this all work right out of
 
 ### The "Endgame" of GitOps
 
-briefly touched on it, tldr no one actually touches kubernetes and Git is the sole soure of truth
+Without violating an Hollywood IP, the "End Game" of GitOps is quite simple, Git is the single source of truth. In theory its simple, in practice it can be challenging. Thankfully with ArgoCD it becomes quite doable. How this would look fully implmeneted is this:
+
+* k8s Cluster is created
+* ArgoCD is installed and configured
+* `kubeadmin` config is stored in some secrets management tool that no one can access directly
+* Any and all changes to the cluster are made through ArgoCD
+* No one uses `kubectl` to get or do anything
+
+For most of us who are admins, or who used to be admins, the idea of not having any visibility into our clusters or workloads sounds horribly scary. There are times where it can be for sure, but so long as there is a good Git review process and competent people are writing code changes, it doesn't have to be. With ArgoCD (as we will see) you have quite a bit of visibility into what is going on with your cluster(s) and if you have done some Day 2 activities such as having monitoring for your cluster, you don't really "need" `kubectl`. I will admit though not having direct access does make for a nerve racking scenario sometimes, but if done correctly, implementing GitOps will keep manual "tweaks" from being performed without anyone's knowing.
+
+For more information on GitOps, check out [this](https://about.gitlab.com/topics/gitops/) post from GitLab.
 
 ## Installing ArgoCD
 
 As discussed during the outline of ArgoCD I mentioned that ArgoCD typically lives in the Kubernetes cluster where it is deployed. There are other methods where you could technically have a "central" ArgoCD that manages multiple Kubernetes clusters. We will not be focusing on that method as it requires quite a bit more setup and there is nothing lacking if we have 1 ArgoCD instance per Kubernetes cluster (especially since we aren't growing past this during the mineOps series).
 
-### Full Declarative
-
-Note that there are other ways to deploy argocd and the "get going" manifests such as the repository and admin configuration
-
-### Helm Chart, Raw Manifests
+### Raw Manifests
 
 Ideally the best way to install ArgoCD is up to the team who is going to be doing the actual install. The method we are going to pursue is through just normal YAML manifests. I would personally use Helm to deploy this, but learning Helm isn't a necessary for the mineOps series, but a follow up post may be in the works. The fastest way to get the ArgoCD manifests is to obtain them from the [Argo Project's GitHub repository for ArgoCD](https://github.com/argoproj/argo-cd). In this repository there are many great things to look at, but for the most part we are primarly focused on one directory and that is the `manifests` directory which contains the most obvious of YAML files, `install.yaml`. We breifly mentioned this in Part 5, but `kubectl` can be used to target not just local files, but also URLs as well. It looks just like how we would normally apply a manifest, so lets get it going:
 
@@ -95,11 +101,25 @@ networkpolicy.networking.k8s.io/argocd-repo-server-network-policy created
 networkpolicy.networking.k8s.io/argocd-server-network-policy created
 ```
 
-Based on the output above, we have just created quite a few new objects in our cluster. For the most part this is just a bunch of RBAC rules to allow the various compontents of ArgoCD to do all of the things it does. The rest is mostly 
+Based on the output above, we have just created quite a few new objects in our cluster. For the most part this is just a bunch of RBAC rules to allow the various compontents of ArgoCD to do all of the things it does. The rest is really just the actual deployments of the ArgoCD components of which there are a few. We will break down each component just a little bit, but knowing each component isn't 100% necessary for using and working with ArgoCD.
+
+#### ArgoCD Server
+
+#### ArgoCD Redis
+
+#### ArgoCD Dex Server
+
+#### ArgoCD Application Controller
+
+#### ArgoCD ApplicationSet Controller
+
+#### ArgoCD Repo Server
+
+#### ArgoCD Notifications Controller
 
 ### Accessing ArgoCD
 
-To access the web front end of ArgoCD, we will need an `Ingress` object to route our traffic to ArgoCD. Here is a simple manifest for such an Ingress object. Please note you do not actually need to use the web front end to make use of ArgoCD as it will work on its own, but if you wish to use the `argocd` client or view from the web front end to manage things, you will need an `Ingress` object (or a Gateway/VirtualService etc...).
+Now that we've covered the various components that we've installed, it is time to actually "see" and use ArgoCD, but with all things Kubernetes that have some form of GUI component, we will need some form of Ingress to access it. To access the web front end of ArgoCD, we will need an `Ingress` object to route our traffic to ArgoCD. Here is a simple manifest for such an Ingress object. Please note you do not actually need to use the web front end to make use of ArgoCD as it will work on its own, but if you wish to use the `argocd` client or view from the web front end to manage things, you will need an `Ingress` object (or a Gateway/VirtualService etc...). You could also technically use the `kubectl port-forward` function, but that isn't very realistic or scalable since we are using this in a cluster used by many (in theory).
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -131,20 +151,20 @@ spec:
 
 **NOTE** Some of these annotations can be removed by changing the configuration of ArgoCD's settings in the ConfigMap `argocd-cm`, but are required for a "default" installation of ArgoCD along with `ingress-nginx`.
 
-ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have a login. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in. To view the `Secret` and get the password to login initially here is a quick handy one liner:
+ArgoCD is deployed and seems to be up and running, we can get to the web application, but we don't have any login credentials. By default ArgoCD creates an initial admin password which can be found in a secret in the namespace that ArgoCD is installed in. To view the `Secret` and get the password to login initially here is a quick handy one liner:
 
 ```sh
 $ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
 Z1Ha6-z8QVR2jC0b
 ```
 
-Later in this guide we will be doing things in a more declarative process and will not be needing to do the manual secret getting. Now let's try to login to our newly installed ArgoCD instance.
+Later in this guide we will be doing things in a more declarative process and will not be needing to obtain this secret manually or even use it potentially for that matter. Now let's try to login to our newly installed ArgoCD instance.
 
 [![](media/argo-login.gif)](#)
 
 ## Using ArgoCD
 
-Now that we've logged into the UI, we are met with an amazingly detailed blank screen. 
+Now that we've logged into the UI, we are met with an amazingly detailed blank screen. TODO
 
 ### Repository
 
