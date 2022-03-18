@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     path: files/ArgoCD
-    repoURL: git@github.com:kywa/kywa-argo.git
+    repoURL: http://github.com/KyWa/mineOps.git
     targetRevision: inprogress
     directory:
       recurse: true
