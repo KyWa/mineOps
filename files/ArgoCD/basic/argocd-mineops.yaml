@@ -8,14 +8,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: files/ArgoCD
+    directory:
+      jsonnet: {}
+      recurse: true
+    path: files/ArgoCD/basic
     repoURL: https://github.com/KyWa/mineOps.git
     targetRevision: inprogress
-    directory:
-      recurse: true
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
