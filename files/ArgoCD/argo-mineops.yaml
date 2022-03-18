@@ -10,7 +10,7 @@ spec:
   source:
     path: files/ArgoCD
     repoURL: git@github.com:kywa/kywa-argo.git
-    targetRevision: master
+    targetRevision: inprogress
     directory:
       recurse: true
   syncPolicy:
