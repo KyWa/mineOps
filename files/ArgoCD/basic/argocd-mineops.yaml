@@ -13,4 +13,4 @@ spec:
       recurse: true
     path: files/ArgoCD/basic
     repoURL: https://github.com/KyWa/mineOps.git
-    targetRevision: inprogress
+    targetRevision: master

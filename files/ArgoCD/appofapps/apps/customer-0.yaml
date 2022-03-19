@@ -10,7 +10,7 @@ spec:
   source:
     path: files/ArgoCD/appofapps/mineops-servers/customer-0
     repoURL: https://github.com/KyWa/mineOps.git
-    targetRevision: inprogress
+    targetRevision: master
     directory:
       recurse: true
   syncPolicy:
