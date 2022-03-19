@@ -150,7 +150,7 @@ Z1Ha6-z8QVR2jC0b
 
 Later in this guide we will be doing things in a more declarative process and will not be needing to obtain this secret manually or even use it potentially for that matter. Now let's try to login to our newly installed ArgoCD instance.
 
-[![](media/argo-login.gif)](#)
+[![](media/argocd-login-ui.gif)](#)
 
 ## Using ArgoCD
 
@@ -197,7 +197,7 @@ And for the "last" option to work with ArgoCD is the `argocd` CLI. This may be u
 
 Let's at least see how to use it though and as with most tools you will need to authenticate so you can actually communicate:
 
-[![](media/argocd-cli-login.gif)](#)
+[![](media/argocd-login-cli.gif)](#)
 
 To create the same `argocd-minops` `Application` as above, we would run the following:
 
