@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: customer-0
+  name: customer-2
   namespace: argocd
 spec:
   destination:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: files/ArgoCD/appofapps/mineops-servers/customer-0
+    path: files/ArgoCD/appofapps/mineops-servers/customer-2
     repoURL: https://github.com/KyWa/mineOps.git
     targetRevision: inprogress
     directory:
