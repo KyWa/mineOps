@@ -207,7 +207,7 @@ As you can see, the `argocd` CLI is pretty straightforward and has very logicall
 
 ---
 
-With an application defined and the ability to check its current status we have done the core of what you will ever need to do with ArgoCD. However you may have noticed that our `Application` showed "Out of Sync" and that it had a Yellow color as opposed to Green. Most of us know that Green is good and Yellow is typically a warning of some kind. This is still the case with ArgoCD and we can dig into why that is in a later section.
+With an `Application` defined and the ability to check its current status we have done the core of what you will ever need to do with ArgoCD. However you may have noticed that our `Application` showed "Out of Sync" and that it had a Yellow color as opposed to Green. Most of us know that Green is good and Yellow is typically a warning of some kind. This is still the case with ArgoCD and we can dig into why that is in a later section.
 
 ### Using the ArgoCD UI
 
