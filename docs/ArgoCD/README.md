@@ -388,7 +388,7 @@ What if our Git repository isn't public? How does ArgoCD get the credentials to 
 
 Since we are probably still in the UI somewhere, lets see where we go and how we add in a Private Repository, which are just listed as Repositories inside of ArgoCD.
 
-[![](media/argocd-repo-ui.gif](#)
+[![](media/argocd-repo-ui.gif)](#)
 
 Now that we've created a repository (please note I did not include a username/password as I'm too lazy to blur out the data) we can see how ArgoCD stored that in our cluster:
 
