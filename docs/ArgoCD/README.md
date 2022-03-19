@@ -205,7 +205,7 @@ To create the same `argocd-minops` `Application` as above, we would run the foll
 
 As you can see, the `argocd` CLI is pretty straightforward and has very logically named flags for the various commands, but takes way more typing to get an `Application` created than having a manifest to apply or using the UI. The option is there though for those who wish to use it.
 
-</br>
+---
 
 With an application defined and the ability to check its current status we have done the core of what you will ever need to do with ArgoCD. However you may have noticed that our `Application` showed "Out of Sync" and that it had a Yellow color as opposed to Green. Most of us know that Green is good and Yellow is typically a warning of some kind. This is still the case with ArgoCD and we can dig into why that is in a later section.
 
