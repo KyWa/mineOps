@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mineops
+  name: mineops
+  namespace: mineops-0
+spec:
+  selector:
+    matchLabels:
+      app: mineops
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mineops
+    spec:
+      containers:
+      - image: docker.io/mineops/minecraft-server:prod
+        imagePullPolicy: Always
+        name: minecraft-server
+        ports:
+        - name: minecraft
+          containerPort: 25565
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /minecraft
+          name: minecraft-data
+        - mountPath: /minecraft/server.properties
+          subPath: server.properties
+          name: server-properties
+      volumes:
+      - name: minecraft-data
+        persistentVolumeClaim:
+          claimName: mineops
+      - name: server-properties
+        configMap:
+          name: minecraft-server
