@@ -8,7 +8,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: files/ArgoCD/appofapps
+    path: files/ArgoCD/appofapps/apps
     repoURL: https://github.com/KyWa/mineOps.git
     targetRevision: inprogress
     directory:
@@ -17,5 +17,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
