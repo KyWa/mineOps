@@ -23,4 +23,4 @@ This repository is also being made into a blog series which can be found at http
 * [Git](docs/Git/)
 * [Docker](docs/Docker/)
 * [Kubernetes](docs/Kubernetes/)
-* [ArgoCD](docs/ArgoCD)
+* [ArgoCD](docs/ArgoCD/)
