@@ -124,7 +124,7 @@ If all steps have been followed you should be connected to your Minecraft Server
 ---
 **NOTE**
 
-If you try to connect and you recieve a "Connection Refused" message, this is most likely an indication that the Firewall on your server is closed. You can open the port needed for Minecraft Server with this command: `firewall-cmd --add-port=25565`. Note this isn't permanent and will not survive a reboot. However if you are running the setup as it is then you can run this: `firewall-cmd --add-port=25565 --permanent && firewall-cmd --reload`. Please note that the rest of the `mineOps` series will not be using this method of running a server, but if all you wish to do is stand up a Minecraft Server on RHEL/CentOS/Fedora, you are good to go.
+If you try to connect and you recieve a "Connection Refused" message, this is most likely an indication that the Firewall on your server is closed. You can open the port needed for Minecraft Server with this command: `firewall-cmd --add-port=25565/tcp`. Note this isn't permanent and will not survive a reboot. However if you are running the setup as it is then you can run this: `firewall-cmd --add-port=25565/tcp --permanent && firewall-cmd --reload`. Please note that the rest of the `mineOps` series will not be using this method of running a server, but if all you wish to do is stand up a Minecraft Server on RHEL/CentOS/Fedora, you are good to go.
 
 ---
 
