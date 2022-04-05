@@ -49,7 +49,7 @@ OpenJDK 64-Bit Server VM 21.9 (build 17.0.1+12-LTS, mixed mode, sharing)
 There are a few paths in which to download the required `server.jar`, the more familiar for most people would be to go to the link in the first paragraph of this README and download the file to their machine. This option works, but isn't exactly what we are going for. We are going to download the file needed directly. There are two methods I've outlined below with one of them needing a tool called `jq` which can be obtained [here](https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64) with a oneliner here:
 
 ```sh
-curl -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x jq
+curl -o jq -sL https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && chmod +x jq
 ```
 
 Once `jq` is obtained we can download Minecraft Server.
@@ -124,7 +124,7 @@ If all steps have been followed you should be connected to your Minecraft Server
 ---
 **NOTE**
 
-If you try to connect and you recieve a "Connection Refused" message, this is most likely an indication that the Firewall on your server is closed. You can open the port needed for Minecraft Server with this command: `firewall-cmd --add-port=25565`. Note this isn't permanent and will not survive a reboot. However if you are running the setup as it is then you can run this: `firewall-cmd --add-port=25565 --permanent && firewall-cmd --reload`. Please note that the rest of the `mineOps` series will not be using this method of running a server, but if all you wish to do is stand up a Minecraft Server on RHEL/CentOS/Fedora, you are good to go.
+If you try to connect and you recieve a "Connection Refused" message, this is most likely an indication that the Firewall on your server is closed. You can open the port needed for Minecraft Server with this command: `firewall-cmd --add-port=25565/tcp`. Note this isn't permanent and will not survive a reboot. However if you are running the setup as it is then you can run this: `firewall-cmd --add-port=25565/tcp --permanent && firewall-cmd --reload`. Please note that the rest of the `mineOps` series will not be using this method of running a server, but if all you wish to do is stand up a Minecraft Server on RHEL/CentOS/Fedora, you are good to go.
 
 ---
 
